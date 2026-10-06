@@ -193,9 +193,9 @@ export const AuthView: React.FC<AuthViewProps> = ({
 }) => {
   const [mode, setMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
 
-  // Login form state - Tự động điền cho admin nếu vào /admin
-  const [loginEmail, setLoginEmail] = useState(isAdminPortal ? 'admin@hotro.vn' : '');
-  const [loginPassword, setLoginPassword] = useState(isAdminPortal ? '123456' : '');
+  // Login form state - Luôn để trống chuẩn bảo mật cho người dùng nhập
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginWardId, setLoginWardId] = useState(
     targetWard ? targetWard.id : 'ag-phuong-long-xuyen-080'
@@ -398,66 +398,27 @@ export const AuthView: React.FC<AuthViewProps> = ({
             <div className="p-6 space-y-4">
               {/* Province Admin Guidance */}
               {isAdminPortal && (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 space-y-2">
-                  <div className="font-bold flex items-center gap-1.5">
-                    <span>👑</span>
-                    <span>Cổng dành riêng cho Quản trị viên cấp Tỉnh</span>
+                <div className="p-3.5 bg-amber-50/90 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start gap-2.5">
+                  <Shield className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-bold text-slate-900">Cổng Quản trị viên cấp Tỉnh (102 Phường / Xã)</div>
+                    <div className="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
+                      Khu vực bảo mật dành riêng cho Quản trị viên và Ban chỉ đạo Chuyển đổi số tỉnh An Giang.
+                    </div>
                   </div>
-                  <p className="text-[11px] text-amber-800 leading-relaxed">
-                    Khu vực chỉ dành cho tài khoản Super Admin toàn tỉnh giám sát và chỉ đạo 102 phường/xã.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLoginEmail('admin@hotro.vn');
-                      setLoginPassword('123456');
-                    }}
-                    className="w-full py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs shadow-2xs cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    <span>🔑 Điền nhanh Super Admin (admin@hotro.vn / 123456)</span>
-                  </button>
                 </div>
               )}
 
               {/* Ward Staff Guidance */}
               {targetWard && !isAdminPortal && (
-                <div className="p-3 bg-blue-50 border border-blue-200 rounded-2xl text-xs text-blue-900 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold">Địa bàn: {targetWard.name}</span>
-                    <span className="text-[10px] bg-blue-200/60 text-blue-900 px-2 py-0.5 rounded font-bold">
-                      {targetWard.unitType === 'PHUONG' ? 'Phường' : targetWard.unitType === 'DAC_KHU' ? 'Đặc khu' : 'Xã'}
-                    </span>
+                <div className="p-3 bg-blue-50/90 border border-blue-200 rounded-2xl text-xs text-blue-900 flex items-center justify-between">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span className="font-bold truncate">Địa bàn công tác: {targetWard.name}</span>
                   </div>
-                  <div className="flex flex-wrap gap-2 pt-0.5">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const accs = appStorage.getUserAccounts();
-                        const leaderAcc = accs.find(a => a.wardId === targetWard.id && a.role === 'LEADER') ||
-                          accs.find(a => a.wardId === targetWard.id);
-                        if (leaderAcc) {
-                          setLoginEmail(leaderAcc.email);
-                          setLoginPassword('123456');
-                        } else {
-                          setLoginEmail('admin@hotro.vn');
-                          setLoginPassword('123456');
-                        }
-                      }}
-                      className="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 font-semibold rounded-lg text-[11px] border border-slate-300 shadow-2xs cursor-pointer"
-                    >
-                      🔑 Mẫu Tổ trưởng {targetWard.name}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setLoginEmail('admin@hotro.vn');
-                        setLoginPassword('123456');
-                      }}
-                      className="px-2.5 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-[11px] shadow-2xs cursor-pointer"
-                    >
-                      👑 Admin tỉnh vào {targetWard.name}
-                    </button>
-                  </div>
+                  <span className="text-[10px] bg-blue-200/70 text-blue-900 px-2 py-0.5 rounded font-bold shrink-0">
+                    {targetWard.districtName}
+                  </span>
                 </div>
               )}
 

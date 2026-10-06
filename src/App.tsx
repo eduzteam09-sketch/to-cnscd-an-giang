@@ -133,36 +133,13 @@ export default function App() {
   // - Hoàn toàn không hiển thị nút "Dành cho Cán bộ Tổ"
   // =========================================================================
   if (currentRoute.type === 'CITIZEN') {
-    return (
-      <div className="relative">
-        <CitizenPortalView hideStaffButton={true} />
-
-        {/* Thanh chuyển nhanh chế độ xem (Hỗ trợ người dùng kiểm tra tiện lợi trên Preview) */}
-        <div className="fixed bottom-3 left-3 z-40 bg-slate-900/90 backdrop-blur-md text-white text-[11px] px-3 py-1.5 rounded-full border border-slate-700 shadow-xl flex items-center gap-2">
-          <span className="text-emerald-400 font-bold">● Cổng Dân</span>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/xaanphu')}
-            className="hover:text-blue-300 font-medium transition-colors cursor-pointer"
-          >
-            Vào Xã An Phú (/xaanphu)
-          </button>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/admin')}
-            className="hover:text-amber-300 font-medium transition-colors cursor-pointer"
-          >
-            Cổng Tỉnh (/admin)
-          </button>
-        </div>
-      </div>
-    );
+    return <CitizenPortalView hideStaffButton={true} />;
   }
 
   // =========================================================================
   // TRANG 3: TRANG QUẢN LÝ TỔNG TỈNH AN GIANG (102 PHƯỜNG / XÃ) (URL: /admin)
   // - Chỉ dành cho Quản trị viên cấp Tỉnh (Super Admin)
-  // - Nếu chưa đăng nhập admin: hiển thị form Đăng nhập/Đăng ký dành riêng cho Cổng Tỉnh
+  // - Nếu chưa đăng nhập admin: hiển thị form Đăng nhập/Đăng ký Cổng Tỉnh
   // - Admin có thể vào trang quản lý của bất kỳ phường/xã nào
   // =========================================================================
   if (currentRoute.type === 'ADMIN') {
@@ -184,38 +161,17 @@ export default function App() {
 
     // Đã đăng nhập Super Admin -> Hiển thị Giao diện Quản lý Toàn Tỉnh
     return (
-      <div className="relative">
-        <ProvinceAdminView
-          key={`province-view-${refreshKey}`}
-          onSwitchToWardManagement={(wardId) => {
-            const targetWard = AN_GIANG_WARDS_102.find(w => w.id === wardId);
-            if (targetWard) {
-              appStorage.setSelectedWardId(targetWard.id);
-              navigate(`/${toWardSlug(targetWard.name)}`);
-            }
-          }}
-          onLogout={handleLogout}
-        />
-
-        {/* Thanh chuyển nhanh quay về cổng người dân */}
-        <div className="fixed bottom-3 left-3 z-40 bg-slate-900/90 backdrop-blur-md text-white text-[11px] px-3 py-1.5 rounded-full border border-slate-700 shadow-xl flex items-center gap-2 no-print">
-          <span className="text-amber-400 font-bold">👑 Cổng Quản Lý Tỉnh</span>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/')}
-            className="hover:text-blue-300 font-medium transition-colors cursor-pointer"
-          >
-            Về Cổng Dân (/)
-          </button>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/xaanphu')}
-            className="hover:text-emerald-300 font-medium transition-colors cursor-pointer"
-          >
-            Thử vào Xã An Phú (/xaanphu)
-          </button>
-        </div>
-      </div>
+      <ProvinceAdminView
+        key={`province-view-${refreshKey}`}
+        onSwitchToWardManagement={(wardId) => {
+          const targetWard = AN_GIANG_WARDS_102.find(w => w.id === wardId);
+          if (targetWard) {
+            appStorage.setSelectedWardId(targetWard.id);
+            navigate(`/${toWardSlug(targetWard.name)}`);
+          }
+        }}
+        onLogout={handleLogout}
+      />
     );
   }
 
@@ -393,25 +349,6 @@ export default function App() {
             initialRequestId={createTaskInitialRequestId}
           />
         )}
-
-        {/* Thanh chuyển nhanh chế độ xem khi thử nghiệm */}
-        <div className="fixed bottom-3 left-3 z-40 bg-slate-900/90 backdrop-blur-md text-white text-[11px] px-3 py-1.5 rounded-full border border-slate-700 shadow-xl flex items-center gap-2">
-          <span className="text-blue-400 font-bold">● {currentWard.name}</span>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/')}
-            className="hover:text-emerald-300 font-medium transition-colors cursor-pointer"
-          >
-            Về Cổng Dân (/)
-          </button>
-          <span className="text-slate-500">|</span>
-          <button
-            onClick={() => navigate('/admin')}
-            className="hover:text-amber-300 font-medium transition-colors cursor-pointer"
-          >
-            Cổng Tỉnh (/admin)
-          </button>
-        </div>
       </div>
     );
   }

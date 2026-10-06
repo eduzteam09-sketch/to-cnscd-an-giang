@@ -139,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
               <div className="text-[10px] sm:text-[11px] text-blue-200 truncate">
                 {(currentUser.role === 'ADMIN' || appStorage.isCurrentUserSuperAdmin())
-                  ? `Đang điều hành cấp cơ sở với tài khoản Quản trị viên tỉnh (admin@hotro.vn)`
+                  ? `Đang điều hành với quyền Quản trị viên cấp Tỉnh`
                   : `Hệ thống số hóa & hỗ trợ 5 nhóm đối tượng`}
               </div>
             </div>
