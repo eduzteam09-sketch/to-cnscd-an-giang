@@ -1,0 +1,6 @@
+{
+  "name": "CNSCĐ - Điều Hành Công Việc & Hỗ Trợ Tổ Công Nghệ Số Cộng Đồng",
+  "description": "Hệ thống điều hành công việc, quản lý yêu cầu hỗ trợ chuyển đổi số, theo dõi quy trình 6 bước, quản lý đối tượng và đôn đốc nhiệm vụ cho Tổ CNSCĐ.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

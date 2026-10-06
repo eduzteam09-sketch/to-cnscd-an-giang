@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  button, a, select, summary, [role="button"], input[type="button"], input[type="submit"], input[type="reset"] {
+    cursor: pointer !important;
+  }
+}
+
+/* Global button and interactive element enhancements */
+button, [role="button"] {
+  transition: all 0.15s ease-in-out;
+}
+
+button:hover:not(:disabled), [role="button"]:hover {
+  filter: brightness(1.04);
+}
+
+button:active:not(:disabled), [role="button"]:active {
+  transform: scale(0.98);
+}
+
+/* Custom styles for print reports and compact mobile lists */
+@media print {
+  header, nav, footer, .no-print, [role="navigation"] {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body, main {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 11pt !important;
+  }
+  .shadow-2xs, .shadow-xs, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
+    box-shadow: none !important;
+  }
+  tr, table, .avoid-break {
+    page-break-inside: avoid !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 15mm 15mm;
+  }
+}
+
+/* Smooth mobile touch scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
